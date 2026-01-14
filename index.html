@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0f1115" />
+  <title>Account Vault</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="styles.css" />
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <div class="app">
+    <header class="app__header">
+      <div class="brand">
+        <span class="brand__mark"></span>
+        <div>
+          <p class="brand__name">Account Vault</p>
+          <p class="brand__tagline">Offline-first account inventory</p>
+        </div>
+      </div>
+      <button class="icon-button" id="lockButton" aria-label="Lock vault">
+        <span class="icon-button__icon">🔒</span>
+      </button>
+    </header>
+
+    <main class="app__main">
+      <section id="authView" class="view view--auth" aria-labelledby="authTitle">
+        <div class="auth-card">
+          <h1 id="authTitle">Unlock your vault</h1>
+          <p class="muted">Your master password never leaves your device. It encrypts passwords stored inside your vault.</p>
+          <label class="field">
+            <span>Master password</span>
+            <input type="password" id="masterPassword" placeholder="Enter master password" autocomplete="current-password" />
+          </label>
+          <label class="field">
+            <span>Confirm password (first time only)</span>
+            <input type="password" id="confirmPassword" placeholder="Re-enter master password" autocomplete="new-password" />
+          </label>
+          <p class="form-message" id="authMessage" role="status" aria-live="polite"></p>
+          <button class="primary-button" id="unlockButton">Unlock vault</button>
+          <div class="auth-tips">
+            <div class="tip">
+              <h3>Tips</h3>
+              <ul>
+                <li>Choose a strong password you will remember.</li>
+                <li>Your vault auto-locks after inactivity.</li>
+                <li>Export encrypted backups regularly.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="mainView" class="view view--main is-hidden" aria-labelledby="vaultTitle">
+        <div class="toolbar">
+          <div class="toolbar__title">
+            <h2 id="vaultTitle">Your accounts</h2>
+            <p class="muted">Search, filter, and manage your inventory.</p>
+          </div>
+          <div class="toolbar__actions">
+            <button class="ghost-button" id="exportButton">Export</button>
+            <label class="ghost-button ghost-button--input" for="importInput">Import</label>
+            <input type="file" id="importInput" accept="application/json" />
+            <button class="primary-button" id="addAccountButton">+ Add</button>
+          </div>
+        </div>
+        <div class="kpi-grid" id="kpiGrid">
+          <div class="kpi-card">
+            <p class="kpi-label">Total accounts</p>
+            <p class="kpi-value" id="totalAccounts">0</p>
+          </div>
+          <div class="kpi-card">
+            <p class="kpi-label">Platforms</p>
+            <p class="kpi-value" id="platformCount">0</p>
+          </div>
+          <div class="kpi-card">
+            <p class="kpi-label">Latest update</p>
+            <p class="kpi-value kpi-value--small" id="latestUpdate">—</p>
+          </div>
+        </div>
+        <div class="filters">
+          <label class="field field--inline">
+            <span class="sr-only">Search accounts</span>
+            <input type="search" id="searchInput" placeholder="Search by label, user, or tag" />
+          </label>
+          <label class="field field--inline">
+            <span class="sr-only">Filter by platform</span>
+            <select id="platformFilter">
+              <option value="">All platforms</option>
+              <option value="work">Work</option>
+              <option value="social">Social</option>
+              <option value="finance">Finance</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="accounts-list" id="accountsList" aria-live="polite"></div>
+        <p class="empty-state is-hidden" id="emptyState">No accounts yet. Tap “+ Add” to start your vault.</p>
+      </section>
+    </main>
+
+    <div id="accountModal" class="modal is-hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal__content">
+        <div class="modal__header">
+          <h2 id="modalTitle">Add account</h2>
+          <button class="icon-button" id="closeModalButton" aria-label="Close">
+            ✕
+          </button>
+        </div>
+        <form class="modal__body" id="accountForm">
+          <label class="field">
+            <span>Platform</span>
+            <input type="text" id="platformInput" placeholder="e.g. Work" />
+          </label>
+          <label class="field">
+            <span>Label</span>
+            <input type="text" id="labelInput" placeholder="Account name" />
+          </label>
+          <label class="field">
+            <span>Email or username</span>
+            <input type="text" id="userInput" placeholder="user@example.com" />
+          </label>
+          <label class="field">
+            <span>Password (encrypted)</span>
+            <div class="field__inline">
+              <input type="password" id="passwordInput" placeholder="Optional" />
+              <button type="button" class="secondary-button" id="generatePasswordButton">Generate</button>
+            </div>
+          </label>
+          <label class="field">
+            <span>Tags</span>
+            <input type="text" id="tagsInput" placeholder="Comma-separated" />
+          </label>
+          <label class="field">
+            <span>Notes</span>
+            <textarea id="notesInput" rows="3" placeholder="Add context, recovery info, or reminders"></textarea>
+          </label>
+          <p class="form-message" id="formMessage" role="status" aria-live="polite"></p>
+          <div class="modal__actions">
+            <button type="button" class="ghost-button" id="deleteAccountButton">Delete</button>
+            <button type="submit" class="primary-button" id="saveAccountButton">Save account</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="toast is-hidden" id="toast" role="status" aria-live="polite"></div>
+  </div>
+</body>
+</html>
