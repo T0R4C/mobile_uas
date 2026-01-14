@@ -1,0 +1,16 @@
+{
+  "name": "Account Vault",
+  "short_name": "Vault",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0f1115",
+  "theme_color": "#0f1115",
+  "description": "Offline-first account inventory vault.",
+  "icons": [
+    {
+      "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAAAQCAYAAAB49f1SAAAACXBIWXMAAAsSAAALEgHS3X78AAAAIUlEQVR4nO3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAAAADwGx8AAat9Y9cAAAAASUVORK5CYII=",
+      "sizes": "64x64",
+      "type": "image/png"
+    }
+  ]
+}
